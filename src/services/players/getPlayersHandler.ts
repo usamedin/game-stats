@@ -2,17 +2,24 @@ import { APIGatewayEvent } from 'aws-lambda'
 import { sequelize } from '../../models'
 import { Player } from '../../models/Player.model'
 import { PlayersResponse } from '../../types/ListResponse'
+import { getPaginatedRequestParams } from '../../utils/utils'
 
 export async function getPlayers(event: APIGatewayEvent) {
-    const { page, pageSize } = event.queryStringParameters as any
+    const { page, pageSize } = getPaginatedRequestParams(event)
+
     await sequelize.sync()
 
     try {
-        const players = await Player.findAll({ attributes: ['name', 'id'] })
+        const players = await Player.findAll({
+            attributes: ['name', 'id'], // TODO: type possible fields
+            offset: pageSize * page,
+            limit: pageSize
+        })
 
         const response: PlayersResponse = {
             items: players,
-            size: players.length
+            pageSize: players.length,
+            page
         }
 
         return {

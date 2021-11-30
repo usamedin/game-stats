@@ -1,6 +1,9 @@
 import { Player } from './Player.model'
 import { Sequelize } from 'sequelize-typescript'
 import { DB_HOST, DB_PASSWORD, DB_USER } from '../shared/config'
+import mysql2 from 'mysql2'
+import { Match } from './Match.model'
+import { MatchPlayer } from './MatchPlayer.model'
 
 const options: any = {
     host: DB_HOST,
@@ -8,10 +11,9 @@ const options: any = {
     password: DB_PASSWORD,
     database: 'game-stats',
     dialect: 'mysql',
-    models: [Player]
+    models: [Player, Match, MatchPlayer]
 }
 
-import mysql2 from 'mysql2'
 if (options.dialect === 'mysql') {
     options.dialectModule = mysql2
 }
