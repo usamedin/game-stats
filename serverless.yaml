@@ -32,6 +32,10 @@ provider:
   iamManagedPolicies:
     - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
   iamRoleStatements: ${file(src/serverless/permissions.yaml)}
+  environment:
+    DB_HOST: ${ssm:/DB_HOST~true}
+    DB_USER: ${ssm:/DB_USER~true}
+    DB_PASSWORD: ${ssm:/DB_PASSWORD~true}
 
 package:
   exclude:
