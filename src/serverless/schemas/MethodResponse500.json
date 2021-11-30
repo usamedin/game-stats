@@ -1,0 +1,35 @@
+{
+    "title": "MethodResponse500",
+    "description": "Internal Server Errors",
+    "type": "object",
+    "properties": {
+        "statusCode": {
+            "type": "integer"
+        },
+        "code": {
+            "type": "string",
+            "enum": [
+                "INTERNAL_SERVER_ERROR"
+            ]
+        },
+        "message": {
+            "type": "string"
+        },
+        "errors": {
+            "type": "array",
+            "description": "array of all the native errors reported",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "code",
+        "message"
+    ]
+}

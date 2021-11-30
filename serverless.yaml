@@ -1,0 +1,40 @@
+service: game-stats
+plugins:
+  - serverless-reqvalidator-plugin
+  - serverless-webpack
+  - serverless-dotenv-plugin
+  - serverless-deployment-bucket
+  - serverless-aws-documentation
+  - serverless-offline
+functions:
+  - ${file(src/serverless/functions.yaml)}
+resources:
+  - ${file(src/serverless/resources.yaml)}
+custom:
+  webpack:
+    webpackConfig: ./build/webpack.js
+  documentation:
+    api:
+      info:
+        version: "1"
+        title: "ABB API"
+    models: ${file(src/serverless/models.yaml)}
+provider:
+  name: aws
+  runtime: nodejs14.x
+  versionFunctions: false
+  deploymentBucket:
+    name: game-stats-deployments
+    serverSideEncryption: AES256
+  stage: "${opt:stage, 'test'}"
+  region: eu-central-1
+  memorySize: 512
+  iamManagedPolicies:
+    - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  iamRoleStatements: ${file(src/serverless/permissions.yaml)}
+
+package:
+  exclude:
+    - ./**
+  include:
+    - dist/**

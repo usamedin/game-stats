@@ -1,0 +1,36 @@
+Resources:
+  validator:
+    Type: AWS::ApiGateway::RequestValidator
+    Properties:
+      Name: "req-validator"
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ValidateRequestBody: true
+      ValidateRequestParameters: true
+  GatewayResponseResourceNotFound:
+    Type: 'AWS::ApiGateway::GatewayResponse'
+    Properties:
+      RestApiId:
+        Ref: 'ApiGatewayRestApi'
+      ResponseType: BAD_REQUEST_BODY
+      StatusCode : "422"
+      ResponseTemplates:
+        application/json: "{\"message\": \"$context.error.message\", \"error\": \"$context.error.validationErrorString\"}"
+      ResponseParameters:
+        gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+  GatewayResponseDefault4XX:
+    Type: 'AWS::ApiGateway::GatewayResponse'
+    Properties:
+      ResponseParameters:
+        gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+      ResponseType: DEFAULT_4XX
+      RestApiId:
+        Ref: 'ApiGatewayRestApi'
+  GatewayResponseDefault5XX:
+    Type: 'AWS::ApiGateway::GatewayResponse'
+    Properties:
+      ResponseParameters:
+        gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+      ResponseType: DEFAULT_5XX
+      RestApiId:
+        Ref: 'ApiGatewayRestApi'

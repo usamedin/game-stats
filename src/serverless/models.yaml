@@ -1,0 +1,4 @@
+# Common
+- name: MethodResponse500
+  contentType: "application/json"
+  schema: ${file(src/serverless/schemas/MethodResponse500.json)}

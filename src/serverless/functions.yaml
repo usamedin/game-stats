@@ -1,0 +1,21 @@
+getPlayers:
+  handler: handlers.getPlayers
+  events:
+    - http:
+        path: /warzone/players
+        method: GET
+        cors: "*"
+        reqValidatorName: validator
+        documentation:
+          summary: "Get players"
+          methodResponses:
+            - statusCode: "200"
+              responseBody:
+                description: "Warzone players"
+              responseModels:
+                application/json: MethodResponse500
+            - statusCode: "500"
+              responseBody:
+                description: "Internal server error"
+              responseModels:
+                application/json: MethodResponse500

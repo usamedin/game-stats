@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "outDir": "dist",
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "allowJs": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "strictNullChecks": true
+    },
+    "exclude": [
+        "test",
+        "*/dist",
+        "node_modules"
+    ],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.json", "handlers.ts",
+    ]
+}
